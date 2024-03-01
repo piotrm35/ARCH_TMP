@@ -1,5 +1,5 @@
 # blemac
-# version: 4
+# version: 6
 
 import os
 
@@ -59,34 +59,34 @@ res_file = open(RESULT_PATH, 'w')
 print_res('\n\n=========================================')
 print_res('common part of two mac address lists:')
 print_res('\n')
-common_part_of_two_mac_address_list = [el for el in mac_address_list_1 if el in mac_address_list_2]
-common_part_of_two_mac_address_set = set(common_part_of_two_mac_address_list)
+common_part_mac_address_list = [el for el in mac_address_list_1 if el in mac_address_list_2]
+common_part_mac_address_set = set(common_part_mac_address_list)
 i = 1
-for mac_address in common_part_of_two_mac_address_set:
+for mac_address in common_part_mac_address_set:
     if i <= RESULT_LIMIT:
         print_res(str(i) + ') ' + mac_address)
         i += 1
     else:
-        print_res('AND ' + str(len(common_part_of_two_mac_address_set) - RESULT_LIMIT) + ' MORE...')
+        print_res('AND ' + str(len(common_part_mac_address_set) - RESULT_LIMIT) + ' MORE...')
         break
 
 print_res('\n\n=========================================')
 print_res('mac_address_list_1 - mac_address_list_2:')
 print_res('\n')
-diff_of_two_mac_address_list = [el for el in mac_address_list_1 if el not in mac_address_list_2]
-diff_of_two_mac_address_set = set(diff_of_two_mac_address_list)
+diff_mac_address_list = [el for el in mac_address_list_1 if el not in mac_address_list_2]
+diff_mac_address_set = set(diff_mac_address_list)
 i = 1
-for mac_address in diff_of_two_mac_address_set:
+for mac_address in diff_mac_address_set:
     if i <= RESULT_LIMIT:
         print_res(str(i) + ') ' + mac_address)
         i += 1
     else:
-        print_res('AND ' + str(len(diff_of_two_mac_address_set) - RESULT_LIMIT) + ' MORE...')
+        print_res('AND ' + str(len(diff_mac_address_set) - RESULT_LIMIT) + ' MORE...')
         break
 
 if res_file:
     res_file.close()
 
-print('SCRIPT END')
+print('\n\nSCRIPT END')
   
 #================================================================================================================

@@ -1,17 +1,18 @@
 # blemac
-# version: 2
+# version: 4
 
 import os
 
 #================================================================================================================
 # setup:
 
+# Log files must have ".csv" extensions.
+
 # Android 8:
 LOG_FOLDER_1 = '/storage/emulated/0/TMP/scan_log_1/'
 LOG_FOLDER_2 = '/storage/emulated/0/TMP/scan_log_2/'
 RESULT_PATH = '/storage/emulated/0/TMP/res.txt'
-
-# Log files must have ".csv" extensions.
+RESULT_LIMIT = 10
 
 #================================================================================================================
 # functions:
@@ -37,7 +38,7 @@ def get_mac_address_list_from_BLE_Scanner_history_logs(log_file_path_list):
 def get_log_path_list(root_folder, extension):
     res_list = []
     for (dir_path, dir_names, file_names) in os.walk(root_folder):
-        res_list += [(dir_path.replace('\\', '/') + '/' + f).replace('//', '/') for f in file_names if os.path.splitext(f)[1].upper() == extension]
+        res_list += [os.path.join(dir_path, f) for f in file_names if os.path.splitext(f)[1].upper() == extension]
     return res_list
 
 def print_res(tx):
@@ -59,15 +60,29 @@ print_res('\n\n=========================================')
 print_res('common part of two mac address lists:')
 print_res('\n')
 common_part_of_two_mac_address_list = [el for el in mac_address_list_1 if el in mac_address_list_2]
-for mac_address in set(common_part_of_two_mac_address_list):
-    print_res(mac_address)
+common_part_of_two_mac_address_set = set(common_part_of_two_mac_address_list)
+i = 1
+for mac_address in common_part_of_two_mac_address_set:
+    if i <= RESULT_LIMIT:
+        print_res(str(i) + ') ' + mac_address)
+        i += 1
+    else:
+        print_res('AND ' + str(len(common_part_of_two_mac_address_set) - RESULT_LIMIT) + ' MORE...')
+        break
 
 print_res('\n\n=========================================')
 print_res('mac_address_list_1 - mac_address_list_2:')
 print_res('\n')
 diff_of_two_mac_address_list = [el for el in mac_address_list_1 if el not in mac_address_list_2]
-for mac_address in set(diff_of_two_mac_address_list):
-    print_res(mac_address)
+diff_of_two_mac_address_set = set(diff_of_two_mac_address_list)
+i = 1
+for mac_address in diff_of_two_mac_address_set:
+    if i <= RESULT_LIMIT:
+        print_res(str(i) + ') ' + mac_address)
+        i += 1
+    else:
+        print_res('AND ' + str(len(diff_of_two_mac_address_set) - RESULT_LIMIT) + ' MORE...')
+        break
 
 if res_file:
     res_file.close()
